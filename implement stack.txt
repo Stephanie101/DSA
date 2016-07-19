@@ -1,0 +1,45 @@
+public interface Stack<T> {
+    // Rule 1
+    static final Empty EMPTY = Empty.INSTANCE; 
+
+    // Rule 2
+    public Stack<T> push(T value) { return new Push<>(value, this); }
+
+    boolean isEmpty();
+
+    Stack<T> pop();
+
+    T top();
+}
+
+class Empty<T> implements Stack<T> {
+    protected static final Empty INSTANCE = new Empty();
+
+    // Rule 3
+    public boolean isEmpty() { return true; }
+
+    // Rule 7
+    public Stack<T> pop() { throw new UnsupportedOperationException("Can not pop an empty stack"); }
+
+    // Rule 5
+    public T top() { throw new UnsupportedOperationException("Can not take the top of an empty stack");}
+}
+
+class Push<T> implements Stack<T> {
+    private final T top;
+    private final Stack<T> pop;
+
+    Push(T top, Stack<T> pop) {
+        this.top = top;
+        this.pop = pop;
+    }
+
+    // Rule 4
+    public boolean isEmpty() { return false; }
+
+    // Rule 8
+    public Stack<T> pop() { return pop; }
+
+    // Rule 6
+    public T top() { return top; }
+}
